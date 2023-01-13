@@ -1,0 +1,80 @@
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+public class HuffmanLinkedList {
+	
+
+
+  
+   public static void main(String[] args) throws IOException {
+
+       FileReader fr = new FileReader("letter.txt");
+       
+
+       BufferedReader br = new BufferedReader(fr);
+       int nextLetter;
+       int[] count = new int[26];
+       int total = 0;
+       int other = 0;
+
+       System.out.println("Letter            Frequency");    
+       while ((nextLetter = br.read()) != -1) {
+           char current = (char) nextLetter;
+           current = Character.toLowerCase(current);
+           if (current >= 'a' && current <= 'z') {
+               count[current - 'a']++;
+               total++;
+           } else {
+               other++;
+           }
+       }
+       
+    
+      
+   }
+   private static LinkedList createTree(Map<String, Integer> map) {
+	   LinkedList<HuffmanNode> l=new LinkedList();
+       for (java.util.Map.Entry<String, Integer> entry : map.entrySet())
+       {
+       	
+       	HuffmanNode h=new HuffmanNode();
+       	h.c=entry.getKey();
+       	h.data=entry.getValue();
+       	h.left=null;
+       	h.right=null;
+       	Node newNode=new Node(h);
+       	l.sortedInsert(newNode);
+       }
+         		 Node current=l.head;
+         		 HuffmanNode root = null;
+			  while (current!=null) {
+				  
+
+		            HuffmanNode x=(HuffmanNode) current.val;
+		            current=current.next;
+		            HuffmanNode y=(HuffmanNode) current.val;
+		 
+		            HuffmanNode f = new HuffmanNode();
+		            f.data = x.data + y.data;
+		            f.c = "-";
+		            f.left = x;
+	
+		            f.right = y;
+		 
+		            
+		            root = f;
+		 
+		            l.sortedInsert(f);
+		            current=current.next;
+		        }
+		 
+			  return l;
+	  
+   }
+   
+
+}
