@@ -1,0 +1,145 @@
+public class Stack {
+    private  int top;
+    private int[] items;
+    public Stack(int size){
+        this.items=new int[size];
+        this.top=-1;
+
+    }
+    public boolean isEmpty(){
+        return this.top==-1;
+    }
+    public boolean isFull(){
+        return this.top==this.items.length-1;
+    }
+    public int count(){
+        return this.top+1;
+    }
+    public int size(){
+        return this.items.length;
+    }
+    public int peek(){
+      if(!isEmpty()) {  return this.items[this.top];}
+      return 0;
+    }
+    public void push(int val){
+        if(isFull()){
+            System.out.println("stack is full");
+        }else{
+            this.top++;
+            this.items[this.top]=val;
+        }
+    }
+    public int pop(){
+        if(isEmpty()){
+            System.out.println("stack is empty");
+            return -1;
+        }else{
+            this.top--;
+            return this.items[this.top+1];
+        }
+    }
+    public void display(){
+        if(isEmpty())
+            System.out.println("stack is empty");
+        else{
+            for (int i = this.top; i >=0 ; i--) {
+                System.out.println(this.items[i]);
+            }
+        }
+        
+        
+    }
+   public  void insert(Stack s,int num) {
+	   if(s.isEmpty()|| s.peek()<num)
+       {
+           s.push(num);
+           return;
+       }
+       int top=s.pop();
+       insert(s,num);
+       s.push(top);
+	   
+    }
+   static void pushAtBottom(int data, Stack s){
+       if(s.isEmpty()){
+           s.push(data);
+           return;
+       }
+       int top = s.pop();
+       pushAtBottom(data,s);
+       s.push(top);
+   }
+   void reverse(Stack s)
+   {
+       
+       if(s.isEmpty()){
+           return;
+       }
+       int top = s.pop();
+       reverse(s);
+       pushAtBottom(top,s);
+       
+       }
+	 public    void sort(Stack s) {
+		 
+		  if(s.isEmpty())
+	         {
+	         return;
+	        }
+	      int top=s.pop();
+	         sort(s);
+	        insert(s,top);
+	}
+	 
+
+
+	public  Stack merge(Stack s1, Stack s2) {
+        if (!s1.isEmpty() && s2.isEmpty()) {
+            int pop = s1.pop();
+            Stack merge = merge(s1, s2);
+            merge.push(pop);
+
+            return merge;
+        } else if (s1.isEmpty() && !s2.isEmpty()) {
+            int pop = s2.pop();
+            Stack merge = merge(s1, s2);
+            merge.push(pop);
+
+            return merge;
+        } else if (s1.isEmpty() && s2.isEmpty()) {
+            return new Stack(s1.size()+s2.size());
+        } else {
+            Integer pop;
+
+            if (s1.peek() > s2.peek()) {
+                pop = s1.pop();
+            } else {
+                pop = s2.pop();
+            }
+
+            Stack merge = merge(s1, s2);
+            merge.push(pop);
+            return merge;
+        }
+    }
+
+	public Stack Question1(Stack s) {
+		s.sort(s);
+		s.reverse(s);
+		s.pop();
+		return s;
+		}	   
+	   public   Stack Question2(Stack s,Stack s2) {
+		   
+		  Stack k= merge(s, s2);
+		  k.sort(k);
+		 return k;
+		  
+		   
+	   }
+   
+   
+   
+   
+}
