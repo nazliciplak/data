@@ -1,0 +1,303 @@
+import java.util.Collections;
+
+import java.util.Scanner;
+
+import dosya.Node;
+
+public class DoublyLinkedList <T extends Comparable>{
+	 private DNode<T> tail;
+     private DNode<T> head;
+     int count;
+    
+	 
+
+    public DNode<T> createDNode(T val){
+        return new DNode<T>(val);
+    }
+
+    public void addFront(T val){
+        DNode<T> temp = createDNode(val);
+        if (head == null){
+            head = temp;
+            count++;
+        }
+        else {
+            head.prev = temp;
+            temp.next = head;
+            head = temp;
+            count++;
+        }
+    }
+    public void addToEnd(T val){
+        DNode<T> temp = head;
+        DNode<T> tail = createDNode(val);
+        if (head == null){
+            head = tail;
+            count++;
+        }else {
+            while (temp.next != null){
+                temp = temp.next;
+            }
+            temp.next = tail;
+            tail.prev = temp;
+            count++;
+        }
+
+    }
+    public void display(){
+        DNode<T> iterator=head;
+        while(iterator!=null){
+            System.out.println(iterator);
+            iterator=iterator.next;
+
+        }
+    }
+	
+    
+    public void sortavarage(DoublyLinkedList d) { 
+        DNode<Student> current = null, index = null;
+        Student temp; 
+        DoublyLinkedList newD=d;
+    
+        if(head == null) {  
+            return;  
+        }  
+        else {  
+           
+            for(current = newD.head; current.next != null; current = current.next) {  
+                
+                for(index = current.next; index != null; index = index.next) { 
+                    if(current.value.compareTo(index.value)==1) {  
+                        temp = (Student)current.value;  
+                        current.value = index.value;  
+                        index.value= temp;  
+                    }  
+                }  
+            }  
+           
+        }  
+        DNode<T> iterator=newD.head;
+        while(iterator!=null) {
+        	System.out.println(((Student) iterator.value).getName());
+        	iterator=iterator.next;
+        }
+    }  
+    public void sortDisc(DoublyLinkedList d) {
+		   DNode <Student>current = null, index = null;  
+	        Student temp;  
+	        DoublyLinkedList newD=d;
+	        if(head == null) {  
+	            return;  
+	        }  
+	        else {  
+	           
+	            for(current = newD.head; current.next != null; current = current.next) {  
+	                
+	                for(index = current.next; index != null; index = index.next) {  
+	          
+	                    if(current.value.compare(current.value,index.value)<0) {  
+	                        temp = (Student)current.value;  
+	                        current.value = index.value;  
+	                        index.value= temp;  
+	                    }  
+	                }  
+	            }  
+	        }  
+	        DNode<T> iterator=newD.head;
+	        while(iterator!=null) {
+	        	System.out.println(((Student) iterator.value).getName());
+	        	iterator=iterator.next;
+	        }
+	      
+	    }
+    public double mathAverage() {
+    	DNode temp=head;
+    	double total=0;
+    	while(temp!=null) {
+    		total+=((Student) temp.value).getGradeMath();
+    		temp=temp.next;
+    		
+    	}
+    	return total/count;
+    }
+    public double discAverage() {
+    	DNode temp=head;
+    	double total=0;
+    	while(temp!=null) {
+    		total+=((Student) temp.value).getGradeDisc();
+    		temp=temp.next;
+    		
+    	}
+    	return total/count;
+    }
+    public void lowestDsGrade() {
+    	int lowestDSGrade=101;
+    
+    	DNode temp=head;
+    	
+    	 while(temp!=null) {
+    		 if(((Student) temp.value).getGradeDisc() < lowestDSGrade) 
+    			 lowestDSGrade = ((Student) temp.value).getGradeDisc(); 
+    		 temp=temp.next;
+    		 
+    	 } 
+ DNode temp2=head;
+    while(temp2!=null) {
+    	if(((Student) temp2.value).getGradeDisc() == lowestDSGrade) {
+   		 System.out.println(((Student) temp2.value).getName());
+   		 break;
+   		 }
+    	temp2=temp2.next;}
+    	
+    }
+    public int count() {
+    	return count;
+    }
+    
+    	
+	 void deleteNode(DNode del) {
+	   
+		if (head == null || del == null) {
+            return;
+        }
+ 
+        if (head == del) {
+            head = del.next;
+        }
+ 
+        if (del.next != null) {
+            del.next.prev = del.prev;
+        }
+ 
+       
+        if (del.prev != null) {
+            del.prev.next = del.next;
+        }
+        return;
+    }
+	 public static void main (String[] args) {
+		 DoublyLinkedList<Student> k=new DoublyLinkedList();
+	     Student s=new Student("n", "n", 1, 2);
+	     Student s1=new Student("n", "n", 1, 2);
+	     Student s2=new Student("n", "n", 1, 2);
+	     k.addToEnd(s1);
+	     k.addToEnd(s2);
+	     System.out.println("k");
+	     k.menu(k);
+		 
+		 
+		 
+	 }
+
+	public void delStu(DoublyLinkedList d) {
+		System.out.print("Enter the id of the student to delete: ");
+		Scanner scan=new Scanner(System.in);
+		String id = scan.next();
+		
+		DNode<Student> temp=(DNode<Student>) head;
+		while(temp!=null) {
+			if(temp.value.getId()==id) {
+				break;
+				
+			}
+			temp=temp.next;
+		}
+		d.deleteNode(temp);
+	}
+    public void insert(DoublyLinkedList d) {
+    	Scanner scan=new Scanner(System.in);
+		String id = scan.next();
+		String name = scan.next();
+		int gradeMath=scan.nextInt();
+		int gradeDisc=scan.nextInt();
+		Student s=new Student(id,name,gradeMath,gradeDisc);
+		d.addToEnd((T) s);
+    	
+    }
+
+    public void  passStudent(){
+    	
+    	DNode<Student> iterator= (DNode<Student>) head;
+    	DoublyLinkedList<Student> n1=new DoublyLinkedList();
+    	while(iterator!=null) {
+    	if(	(mathAverage())<(((Student) iterator.value).getGradeMath())&&(discAverage()<((Student) iterator.value).getGradeDisc())){
+    		n1.addToEnd(iterator.value);
+    	}
+    	iterator=iterator.next;
+    	}
+    	 DNode<T> iterator2=(DNode<T>) n1.head;
+	        while(iterator!=null) {
+	        	System.out.println(( (Student) iterator2.value).getName());
+	        	iterator2=iterator2.next;
+	        }
+    	
+
+    }
+    
+    public void menu(DoublyLinkedList d) {
+  	 
+  	 
+    	 
+      	  while(true) {
+      		 System.out.println("MENU");
+         	  System.out.println("1.Display the linked list.");
+         	  System.out.println("2.Display the students sorted by overall average.");
+         	  System.out.println("3.Display students names sorted by data structure grade.");
+         	  System.out.println("4.Find and display math average.");
+         	  System.out.println("5.Find and display student(s) with lowest Data structure grade.");
+         	  System.out.println("6.Delete a student.");
+         	  System.out.println("7.Insert a student.");
+         	  System.out.println("8.Find and display student count.");
+         	  System.out.println("9.Find and display successful student."   );
+         	  System.out.println("10.Exit");
+         	 Scanner scan =new Scanner (System.in);
+             int input=scan.nextInt();
+            
+      if(input==1) {
+    	  display();
+     
+    	  
+      }
+  	  if(input==2) {
+  		  sortavarage(d);
+  	  }
+  	if(input==3) {
+  		sortDisc(d);
+  		
+  	}
+  	if(input==4) {
+  		System.out.println(mathAverage());
+  	}
+  	if(input==5) {
+  		lowestDsGrade();
+  	}
+      
+  	if(input==6) {
+  		
+  		delStu(d);
+  	}
+      
+  	if(input==7) {
+  		insert(d);
+  	}
+  	if(input==8) {
+  			
+  		System.out.println(count());
+  	}
+  	if(input==9) {
+  		passStudent();
+  		
+  	}
+  	if(input==10) {
+  		break;
+  	}
+  	else {
+  		continue;
+  	}
+  	
+  	
+      	  }
+     
+   		}
+  
+   		}
